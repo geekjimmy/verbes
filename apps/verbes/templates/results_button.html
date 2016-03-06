@@ -1,0 +1,9 @@
+{% url 'results' as results_url %}
+
+{% if success_rate != None %}
+    {% if request.get_full_path != results_url %}
+    <a href="{% url 'results' %}" class="ui-btn">{{ success_rate }} %</a>
+    {% else %}
+    <a href="{% url 'results' %}" class="ui-btn ui-state-disabled">{{ success_rate }} %</a>
+    {% endif %}
+{% endif %}

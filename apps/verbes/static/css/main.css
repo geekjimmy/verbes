@@ -1,0 +1,43 @@
+@media only screen and (min-width: 600px)
+{
+    .ui-page
+    {
+        width: 600px !important;
+        margin: 0 auto !important;
+        position: relative !important;
+        border-right: 1px #000 outset !important;
+        border-left: 1px #000 outset !important;
+    }
+}
+
+.text-center {
+    text-align: center;
+}
+
+.good-answer {
+    color: green;
+}
+
+
+.bad-answer {
+    color: red;
+}
+
+.ui-header .ui-title {
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+.ui-footer .ui-title {
+    margin-right: 5%;
+    margin-left: 5%;
+    font-size:0.8em;
+}
+
+.results {
+    margin-top: 4em;
+}
+
+.next {
+    float: right;
+}

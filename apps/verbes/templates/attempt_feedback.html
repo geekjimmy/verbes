@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div data-role="page" id="attempt-feedback-page">
+
+  <div data-role="header">
+    <h1>Exercices de conjugaison</h1>
+    <a href="{% url 'attempt' %}" class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext"></a>
+    {% include "results_button.html" %}
+  </div>
+
+  <div data-role="main" class="ui-content">
+
+    <div>
+      {% include 'question.html' %}
+    </div>
+
+    {% if attempt.is_good %}
+
+    <p>{% if conjugation.mood.name == "impératif" %}({% endif %}{{ conjugation.person.pronoun|join:" / "|capfirst }}{% if conjugation.mood.name == "impératif" %}){% endif %} <span class="good-answer">{{ attempt.answer }} ✓</span></p>
+
+    <p>Bonne réponse!</p>
+
+    {% else %}
+
+    <p>{% if conjugation.mood.name == "impératif" %}({% endif %}{{ conjugation.person.pronoun|join:" / "|capfirst }}{% if conjugation.mood.name == "impératif" %}){% endif %} <span class="bad-answer">{{ attempt.answer }} ✘</span>
+    <p>Réponse: <strong>{{ attempt.values|join:", " }}</strong></p>
+
+    {% endif %}
+
+    <a href="{% url 'attempt' %}" class="ui-btn focus" id="continue">Poursuivre</a>
+
+  </div>
+
+  {% include 'footer.html' %}
+
+</div>
+
+{% endblock content %}

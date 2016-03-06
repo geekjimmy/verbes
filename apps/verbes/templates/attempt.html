@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Exercices de conjugaison{% endblock page_title %}
+
+{% block content %}
+
+<div data-role="page" id="attempt-page">
+
+  <div data-role="header">
+    <h1>Exercices de conjugaison</h1>
+
+    <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
+      {% include "results_button.html" %}
+    </div>
+
+  </div>
+
+  <div data-role="main" class="ui-content">
+
+    <div>
+      {% include 'question.html' %}
+    </div>
+
+    <form id="validate-form" method="post" action="{% url 'attempt-feedback' %}">
+      {% csrf_token %}
+      {% for hidden in form.hidden_fields %}
+      {{ hidden }}
+      {% endfor %}
+
+      <div class="ui-field-contain">
+        <label for="{{ form.answer.auto_id }}" class="text-center">{% if conjugation.mood.name == "impératif" %}({% endif %}{{ conjugation.person.pronoun|join:" / "|capfirst }}{% if conjugation.mood.name == "impératif" %}){% endif %}</label>
+        <input id="{{ form.answer.auto_id }}" name="{{ form.answer.html_name }}" type="text" autocomplete="off">
+      </div>
+
+      <button id="submit-attempt" class="ui-btn ui-state-disabled" href="#">Valider</button>
+
+    </form>
+
+    {% include 'footer.html' %}
+
+  </div>
+
+
+</div>
+
+
+
+{% endblock content %}

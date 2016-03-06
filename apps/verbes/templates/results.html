@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Vos résultats{% endblock page_title %}
+
+{% block content %}
+
+<div data-role="page" id="results-page">
+
+  <div data-role="header">
+    <h1>Vos résultats</h1>
+
+    <a href="{% url 'attempt' %}" class="ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext"></a>
+    {% include "results_button.html" %}
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <div>
+      <table data-role="table" data-mode="reflow" class="ui-responsive">
+        <thead>
+          <tr>
+            <th data-priority="1">Verbe</th>
+            <th data-priority="2">Temps</th>
+            <th data-priority="3">Personne</th>
+            <th data-priority="4">Votre réponse</th>
+            <th data-priority="4">Réponse</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for attempt in attempts %}
+          <tr>
+            <th>{{ attempt.conjugation.verb }}</th>
+            <td>{{ attempt.conjugation.mood }} {{ attempt.conjugation.tense }}</td>
+            <td>{{ attempt.conjugation.person.pronoun|join:" / " }}</td>
+            <td><span class="{{ attempt.is_good|yesno:"good,bad" }}-answer">{{ attempt.answer }}</span></td>
+            <td>{{ attempt.values|join:", " }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <span class="step-links">
+        {% if attempts.has_previous %}
+        <a href="?page={{ attempts.previous_page_number }}" class="ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-btn-inline"></a>
+        {% endif %}
+
+        {% if attempts.has_next %}
+        <a href="?page={{ attempts.next_page_number }}" class="ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-notext ui-btn-inline next"></a>
+        {% endif %}
+      </span>
+    </div>
+
+  </div>
+
+  {% include 'footer.html' %}
+
+</div>
+
+
+
+{% endblock content %}

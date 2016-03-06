@@ -1,0 +1,8 @@
+<p>Conjuguez <strong>{{ conjugation.verb }}</strong>
+
+{% if conjugation.mood.name == "indicatif" %}
+  {% if conjugation.tense.name == "imparfait" %}à l'{% else %}au {% endif %}<strong>{{ conjugation.tense.name }}{% if conjugation.tense.name == "présent" %} de l'indicatif{% endif %}</strong>:
+{% else %}
+  {% if conjugation.mood.name == "impératif" %}à l'{% else %}au {% endif %}<strong>{{ conjugation.mood.name }} {{ conjugation.tense.name }}</strong>:
+{% endif %}
+</p>

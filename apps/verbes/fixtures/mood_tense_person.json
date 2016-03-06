@@ -1,0 +1,177 @@
+[
+  {
+    "pk": null,
+    "model": "verbes.Mood",
+    "fields": {
+      "name": "indicatif"
+    }
+  },
+  {
+    "pk": null,
+    "model": "verbes.Mood",
+    "fields": {
+      "name": "conditionnel"
+    }
+  },
+  {
+    "pk": null,
+    "model": "verbes.Mood",
+    "fields": {
+      "name": "impératif"
+    }
+  },
+  {
+    "pk": null,
+    "model": "verbes.Mood",
+    "fields": {
+      "name": "subjonctif"
+    }
+  },
+
+
+  {
+    "pk": null,
+    "model": "verbes.Tense",
+    "fields": {
+      "name": "présent"
+    }
+  },
+
+  {
+    "pk": null,
+    "model": "verbes.Tense",
+    "fields": {
+      "name": "imparfait"
+    }
+  },
+
+  {
+    "pk": null,
+    "model": "verbes.Tense",
+    "fields": {
+      "name": "passé simple"
+    }
+  },
+
+  {
+    "pk": null,
+    "model": "verbes.Tense",
+    "fields": {
+      "name": "futur simple"
+    }
+  },
+
+
+  {
+    "pk": null,
+    "model": "verbes.MoodTense",
+    "fields": {
+      "mood": ["indicatif"],
+      "tense": ["présent"]
+    }
+  },
+  {
+    "pk": null,
+    "model": "verbes.MoodTense",
+    "fields": {
+      "mood": ["indicatif"],
+      "tense": ["imparfait"]
+    }
+  },
+  {
+    "pk": null,
+    "model": "verbes.MoodTense",
+    "fields": {
+      "mood": ["indicatif"],
+      "tense": ["passé simple"]
+    }
+  },
+  {
+    "pk": null,
+    "model": "verbes.MoodTense",
+    "fields": {
+      "mood": ["indicatif"],
+      "tense": ["futur simple"]
+    }
+  },
+
+
+  {
+    "pk": null,
+    "model": "verbes.MoodTense",
+    "fields": {
+      "mood": ["conditionnel"],
+      "tense": ["présent"]
+    }
+  },
+
+
+  {
+    "pk": null,
+    "model": "verbes.MoodTense",
+    "fields": {
+      "mood": ["subjonctif"],
+      "tense": ["présent"]
+    }
+  },
+
+  {
+    "pk": null,
+    "model": "verbes.MoodTense",
+    "fields": {
+      "mood": ["impératif"],
+      "tense": ["présent"]
+    }
+  },
+
+
+  {
+    "pk": null,
+    "model": "verbes.Person",
+    "fields": {
+      "number": "s",
+      "index": 1
+    }
+  },
+  {
+    "pk": null,
+    "model": "verbes.Person",
+    "fields": {
+      "number": "s",
+      "index": 2
+    }
+  },
+  {
+    "pk": null,
+    "model": "verbes.Person",
+    "fields": {
+      "number": "s",
+      "index": 3
+    }
+  },
+  {
+    "pk": null,
+    "model": "verbes.Person",
+    "fields": {
+      "number": "p",
+      "index": 1
+    }
+  },
+  {
+    "pk": null,
+    "model": "verbes.Person",
+    "fields": {
+      "number": "p",
+      "index": 2
+    }
+  },
+  {
+    "pk": null,
+    "model": "verbes.Person",
+    "fields": {
+      "number": "p",
+      "index": 3
+    }
+  }
+
+]
