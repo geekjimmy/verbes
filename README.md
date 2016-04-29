@@ -1,6 +1,12 @@
 # Verbes
 
-Verbes is a French verb trainer.
+Verbes is a French verb conjugation trainer.
+
+![](img/preparions.png)
+
+![](img/preparions-feedback.png)
+
+![](img/results.png)
 
 
 # Development Environment
