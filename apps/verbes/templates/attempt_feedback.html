@@ -25,7 +25,7 @@
     {% else %}
 
     <p>{% if conjugation.mood.name == "impératif" %}({% endif %}{{ conjugation.person.pronoun|join:" / "|capfirst }}{% if conjugation.mood.name == "impératif" %}){% endif %} <span class="bad-answer">{{ attempt.answer }} ✘</span>
-    <p>Réponse: <strong>{{ attempt.values|join:", " }}</strong></p>
+    <p>Réponse : <strong>{{ attempt.values|join:", " }}</strong></p>
 
     {% endif %}
 
