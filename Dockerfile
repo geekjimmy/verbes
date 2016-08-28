@@ -10,6 +10,6 @@ CMD ["make", "run"]
 COPY manage.py ./
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
-COPY Makefile ./
+COPY Makefile.app ./Makefile
 COPY apps ./apps
 COPY verbes ./verbes

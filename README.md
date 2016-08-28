@@ -13,28 +13,22 @@ Verbes is a French verb conjugation trainer.
 
 ## Quick Start
 
-### Create a network for the database container and app container
-
-```
-$ make create-network
-```
-
 ### Create the database image
 
 ```
-$ make build-postgres
+$ make create-db
 ```
 
 ### Start the database
 
 ```
-$ make start-postgres
+$ make start-db
 ```
 
 ### Create initial data
 
 ```
-$ make docker-run CMD=bash
+$ make run-app CMD=bash
 # The following commands must be run in the app container
 $ make migrate
 $ make createsuperuser
@@ -42,10 +36,10 @@ $ make load-tenses load-most-frequent-verbs
 $ exit
 ```
 
-### Start the app
+### Run the app
 
 ```
-$ make docker-run
+$ make run-app
 ```
 
 
