@@ -1,7 +1,6 @@
 DB_NAME = verbes
 DB_CONTAINER_NAME = verbes-db
 NETWORK = verbes
-RELOAD =
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

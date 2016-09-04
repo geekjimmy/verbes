@@ -42,6 +42,14 @@ $ exit
 $ make run-app
 ```
 
+#### Reload on change
+
+Restart gunicorn workers when code changes.
+
+```
+$ make run-app CMD=bash
+$ make run OPTIONS=--reload  # In the container
+```
 
 # Author
 
