@@ -51,6 +51,29 @@ $ make run-app CMD=bash
 $ make run OPTIONS=--reload  # In the container
 ```
 
+# Deployment
+
+On the Dokku host:
+
+```
+$ dokku apps:create verbes.mathieularose.com
+$ dokku config:set verbes.mathieularose.com SECRET_KEY=<secret key>
+$ dokku postgres:create verbes
+$ sudo dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres
+$ dokku postgres:link verbes verbes.mathieularose.com
+$ dokku proxy:ports-add verbes.mathieularose.com http:80:5555
+```
+
+## HTTPS
+
+```
+$ dokku config:set --no-restart verbes.mathieularose.com DOKKU_LETSENCRYPT_EMAIL=<e-mail>
+$ sudo dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
+$ dokku letsencrypt verbes.mathieularose.com
+$ dokku letsencrypt:cron-job --add
+```
+
+
 # Author
 
 Mathieu Larose <mathieu@mathieularose.com>
