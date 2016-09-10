@@ -45,7 +45,11 @@ class FeedbackView(View):
         # Save session so there is always one.
         request.session.save()
 
-        attempt.user_session = Session.objects.filter(session_key=request.session.session_key).get()
+        if request.user.is_anonymous():
+            attempt.user_session = Session.objects.filter(session_key=request.session.session_key).get()
+        else:
+            attempt.user = self.request.user
+
         attempt.save()
 
         success_rate = None

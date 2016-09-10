@@ -143,6 +143,9 @@ class ConjugationValue(models.Model):
 class AttemptQuerySet(models.query.QuerySet):
 
     def own(self, request):
+        if not request.user.is_anonymous():
+            return self.filter(user=request.user)
+
         if request.session.session_key is None:
             return self.none()
 
