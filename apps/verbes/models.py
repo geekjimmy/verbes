@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.db import models
 from django.db.models import F, Q
@@ -58,12 +59,33 @@ class MoodTense(models.Model):
     mood = models.ForeignKey(Mood)
     tense = models.ForeignKey(Tense)
 
+    users = models.ManyToManyField(User, through='UserMoodTense')
+
     def __str__(self):
         return "MoodTense({}, {})".format(str(self.mood), str(self.tense))
+
+
+class UserMoodTenseManager(models.Manager):
+    def get_mood_tenses_for_user(self, user):
+        if user.is_anonymous():
+            return MoodTense.objects.none()
+
+        return MoodTense.objects.filter(users=user)
+
+
+class UserMoodTense(models.Model):
+    objects = UserMoodTenseManager()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    mood_tense = models.ForeignKey(MoodTense)
+
+    class Meta:
+        unique_together = ('user', 'mood_tense',)
+
 
 class PersonManager(models.Manager):
     def get_by_natural_key(self, number, index):
         return self.get(number=number, index=index)
+
 
 class Person(models.Model):
     objects = PersonManager()
@@ -95,11 +117,18 @@ class Person(models.Model):
     class Meta:
         unique_together = ('number', 'index')
 
+
 class ConjugationManager(models.Manager):
-    def random(self):
-        count = self.aggregate(count=Count('id'))['count']
+    def random(self, user):
+        conjugations = self
+        if not user.is_anonymous():
+            mood_tense = MoodTense.objects.filter(users=user)
+            if mood_tense.count():
+                conjugations = conjugations.filter(mood_tense__in=MoodTense.objects.filter(users=user))
+
+        count = conjugations.aggregate(count=Count('id'))['count']
         random_index = random.randint(0, count - 1)
-        return self.order_by('id')[random_index]
+        return conjugations.order_by('id')[random_index]
 
     def get_by_natural_key(self, verb, mood, tense, number, index):
         return self.get(
@@ -109,6 +138,7 @@ class ConjugationManager(models.Manager):
             person__number=number,
             person__index=index
         )
+
 
 class Conjugation(models.Model):
     objects = ConjugationManager()
@@ -128,6 +158,7 @@ class Conjugation(models.Model):
 
     def tense(self):
         return self.mood_tense.tense
+
 
 class ConjugationValue(models.Model):
     conjugation = models.ForeignKey(Conjugation, related_name='values')

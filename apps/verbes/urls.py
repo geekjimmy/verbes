@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^$', views.AttempView.as_view(), name='attempt'),
     url(r'^resultat$', views.FeedbackView.as_view(), name='attempt-feedback'),
     url(r'^resultats$', views.ResultsView.as_view(), name='results'),
+    url(r'^mode-temps$', views.UserMoodTenseView.as_view(), name='user-mood-tense'),
 ]

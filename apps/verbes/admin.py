@@ -3,7 +3,7 @@ from django.contrib.admin import SimpleListFilter
 
 from django.db.models import Count
 
-from .models import Attempt, Conjugation, ConjugationValue, Mood, MoodTense, Person, Tense, Verb
+from .models import Attempt, Conjugation, ConjugationValue, Mood, MoodTense, UserMoodTense, Person, Tense, Verb
 
 class IsGoodFilter(SimpleListFilter):
     title = 'Is Good'
@@ -43,6 +43,7 @@ admin.site.register(Conjugation, ConjugationAdmin)
 admin.site.register(ConjugationValue, ConjugationValueAdmin)
 admin.site.register(Mood)
 admin.site.register(MoodTense)
+admin.site.register(UserMoodTense)
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Tense)
 admin.site.register(Verb)

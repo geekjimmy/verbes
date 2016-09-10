@@ -3,18 +3,19 @@ from django.contrib.sessions.models import Session
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext
+from django.urls import reverse_lazy
 from django.views.generic import View, TemplateView
-from django.views.generic.edit import CreateView
-import json
+from django.views.generic.edit import CreateView, FormView
 
-from .forms import AttemptForm
-from .models import Attempt, Conjugation
+from .forms import AttemptForm, UserMoodTenseForm
+from .models import Attempt, Conjugation, UserMoodTense
+
 
 class AttempView(TemplateView):
     template_name = 'attempt.html'
 
     def get_context_data(self):
-        conjugation = Conjugation.objects.random()
+        conjugation = Conjugation.objects.random(self.request.user)
         form = AttemptForm(initial={'conjugation': conjugation})
 
         success_rate = None
@@ -97,3 +98,18 @@ class ResultsView(TemplateView):
         context['success_rate'] = success_rate
 
         return context
+
+
+class UserMoodTenseView(FormView):
+    template_name = 'mood_tense.html'
+    form_class = UserMoodTenseForm
+    success_url = reverse_lazy('user-mood-tense')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        form.save(self.request.user)
+        return super().form_valid(form)
