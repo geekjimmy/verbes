@@ -1,5 +1,9 @@
 .DEFAULT_GOAL := run
 
+ifeq ($(DEBUG),y)
+	RELOAD=--reload
+endif
+
 .PHONY: collectstatic
 collectstatic:
 	python manage.py collectstatic --clear --no-input
@@ -26,4 +30,4 @@ migrate:
 
 .PHONY: run
 run: collectstatic migrate
-	gunicorn --bind 0.0.0.0:5555 --workers 3 $(OPTIONS) verbes.wsgi
+	gunicorn --bind 0.0.0.0:5555 --workers 3 $(RELOAD) verbes.wsgi
