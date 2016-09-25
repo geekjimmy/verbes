@@ -125,7 +125,8 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-ADMINS = ['mathieu+verbes@mathieularose.com']
+DEFAULT_FROM_EMAIL = os.environ['DEFAULT_FROM_EMAIL']
+ADMINS = [DEFAULT_FROM_EMAIL]
 MANAGERS = ADMINS
 
 SESSION_COOKIE_AGE = 180 * 24 * 60 * 60 # 180 days
