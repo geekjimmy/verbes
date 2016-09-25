@@ -1,0 +1,37 @@
+ {% extends "page.html" %}
+
+{% block title %}Connexion{% endblock title %}
+{% block page_title %}Connexion{% endblock page_title %}
+{% block page_id %}{% endblock page_id %}
+
+{% block main %}
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+{% if user.is_authenticated %}
+<p>Your account doesn't have access to this page. To proceed,
+  please login with an account that has access.</p>
+{% else %}
+<p>Please login to see this page.</p>
+{% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'login' %}" data-ajax="false">
+  {% csrf_token %}
+  <label for="email">Adresse courriel</label>
+  <input id="email" type="email" name="username">
+
+  <label for="password">Mot de passe</label>
+  <input id="password" type="password" name="password">
+
+
+  <input type="submit" value="Connexion" />
+  <input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+<p><a href="{% url 'password_reset' %}" data-ajax="false">Mot de passe oublié?</a></p>
+
+{% endblock %}

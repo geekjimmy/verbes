@@ -1,5 +1,7 @@
 from django.apps import AppConfig
 
-
 class AppConfig(AppConfig):
-    name = 'app'
+    name = 'apps.verbes'
+
+    def ready(self):
+        import apps.verbes.signals

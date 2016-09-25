@@ -1,5 +1,8 @@
 from .models import Attempt, MoodTense, UserMoodTense
 from django import forms
+from django.contrib.auth import password_validation
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.forms import ModelForm
 
@@ -42,3 +45,33 @@ class UserMoodTenseForm(forms.Form):
                 user_mood_tenses.append(UserMoodTense(user=user, mood_tense_id=mood_tense_id))
 
         UserMoodTense.objects.bulk_create(user_mood_tenses)
+
+
+class UserRegistrationForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['email', 'password']
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+
+        if User.objects.filter(email=self.cleaned_data['email']).count() > 0:
+            raise ValidationError({'email': "Adresse courriel déjà utilisée"})
+
+        return email
+
+    def clean_password(self):
+        password = self.cleaned_data['password']
+        password_validation.validate_password(password, self.instance)
+        return password
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.username = user.email
+        user.set_password(self.cleaned_data['password'])
+
+        if commit:
+            user.save()
+
+        return user

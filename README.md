@@ -49,6 +49,7 @@ On the Dokku host:
 ```
 $ dokku apps:create verbes.mathieularose.com
 $ dokku config:set verbes.mathieularose.com SECRET_KEY=<secret key>
+$ dokku config:set verbes.mathieularose.com EMAIL_URL=<email url>
 $ dokku postgres:create verbes
 $ sudo dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres
 $ dokku postgres:link verbes verbes.mathieularose.com

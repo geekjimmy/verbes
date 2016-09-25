@@ -1,5 +1,7 @@
+from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.sessions.models import Session
+from django.db import IntegrityError
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext
@@ -7,7 +9,7 @@ from django.urls import reverse_lazy
 from django.views.generic import View, TemplateView
 from django.views.generic.edit import CreateView, FormView
 
-from .forms import AttemptForm, UserMoodTenseForm
+from .forms import AttemptForm, UserMoodTenseForm, UserRegistrationForm
 from .models import Attempt, Conjugation, UserMoodTense
 
 
@@ -69,6 +71,23 @@ class FeedbackView(View):
             'attempt_feedback.html',
             ctx
         )
+
+
+class RegistrationView(FormView):
+    template_name = 'registration/registration.html'
+    form_class = UserRegistrationForm
+    success_url = reverse_lazy('attempt')
+
+    def form_valid(self, form):
+        form.save(True)
+
+        user = authenticate(
+            username=form.cleaned_data['email'],
+            password=form.cleaned_data['password'],
+        )
+        login(self.request, user)
+
+        return super().form_valid(form)
 
 
 class ResultsView(TemplateView):

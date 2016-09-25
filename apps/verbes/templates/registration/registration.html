@@ -1,0 +1,30 @@
+{% extends "page.html" %}
+
+{% block title %}Inscription{% endblock title %}
+{% block page_title %}Inscription{% endblock page_title %}
+{% block page_id %}{% endblock page_id %}
+
+{% block main %}
+
+<form method="post" action="{% url 'registration' %}">
+  {% csrf_token %}
+
+
+  <label for="email">Adresse courriel</label>
+  <input id="email" type="email" name="email" required>
+  {% if form.email.errors %}
+  <span>{{ form.email.errors|first }}</span>
+  {% endif %}
+
+  <label for="password">Mot de passe</label>
+  <input id="password" type="password" name="password" required>
+  {% if form.password.errors %}
+  <span>{{ form.password.errors|first }}</span>
+  {% endif %}
+
+
+  <input type="submit" value="Inscription" />
+  <input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+{% endblock %}

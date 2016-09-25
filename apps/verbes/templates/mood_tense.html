@@ -1,36 +1,37 @@
-{% extends 'base.html' %}
+{% extends 'page.html' %}
 
-{% block page_title %}Mode et temps de conjugaison{% endblock page_title %}
-
-{% block content %}
-<div data-role="page" id="attempt-page">
-
-  <div data-role="header">
-    <h1>Mode et temps de conjugaison</h1>
-
-  </div>
-
-  <div data-role="main" class="ui-content">
-
-    {{ form.subject.errors }}
-
-    <form action="" method="post">{% csrf_token %}
-
-      <fieldset data-role="controlgroup">
-        <legend>Que désirez-vous pratiquer?</legend>
-
-        {% for field in form %}
-        <input type="checkbox" name="{{ field.field.widget.attrs.mood_tense_id }}" id="input-{{ forloop.counter0 }}" {% if field.value %}checked{% endif %}>
-        <label for="input-{{ forloop.counter0 }}">{{ field.label }}</label>
-        {% endfor %}
-      </fieldset>
+{% block title %}Préférences{% endblock title %}
+{% block page_title %}Préférences{% endblock page_title %}
+{% block page_id %}user-mood-tense{% endblock page_id %}
 
 
-      <input type="submit" value="Sauvegarder" />
-    </form>
-  </div>
+{% block main %}
 
-  {% include 'footer.html' %}
-
+{% if not user.is_authenticated %}
+<div class="ui-bar ui-bar-a">
+  <h3>Vous devez avoir un compte pour modifier vos préférences</h3>
 </div>
-{% endblock content %}
+<div class="ui-body ui-body-a">
+  <p><a href="{% url 'registration' %}">Cliquez ici pour
+  vous créer un compte</a></p>
+</div>
+{% endif %}
+
+
+<form action="" method="post" data-ajax="false">
+  {% csrf_token %}
+
+  <fieldset data-role="controlgroup">
+    <legend>Que désirez-vous pratiquer?</legend>
+
+    {% for field in form %}
+    <input type="checkbox" name="{{ field.field.widget.attrs.mood_tense_id }}" id="input-{{ forloop.counter0 }}" {% if field.value %}checked{% endif %}>
+    <label for="input-{{ forloop.counter0 }}">{{ field.label }}</label>
+    {% endfor %}
+  </fieldset>
+
+  <input type="submit" value="Sauvegarder" {% if not user.is_authenticated %}disabled{% endif %}>
+
+</form>
+
+{% endblock main %}

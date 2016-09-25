@@ -22,6 +22,7 @@ run-app: build-app network
 	docker run --rm -ti \
 		--publish 0.0.0.0:5555:5555 \
 		--env DATABASE_URL="postgres://postgres@$(DB_CONTAINER_NAME):5432/$(DB_NAME)" \
+		--env EMAIL_URL="console://" \
 		--env DEBUG="y" \
 		--env SECRET_KEY='bkw2=gerxsur3h35+p!36pk-vt3$dq=p3cug@a%im)!ys0dcrv' \
 		--volume "`pwd`/apps:/app/apps" \

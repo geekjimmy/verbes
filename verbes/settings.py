@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
 import dj_database_url
+import dj_email_url
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -32,13 +33,13 @@ ALLOWED_HOSTS = ['verbes.mathieularose.com']
 # Application definition
 
 INSTALLED_APPS = [
+    'apps.verbes',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.verbes'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -80,30 +81,34 @@ DATABASES = {
     'default': dj_database_url.parse(url=os.environ['DATABASE_URL'])
 }
 
+vars().update(dj_email_url.config())
 
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    # },
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
+
+if DEBUG:
+    AUTH_PASSWORD_VALIDATORS = []
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-ca'
 
 TIME_ZONE = 'UTC'
 
@@ -124,6 +129,9 @@ ADMINS = ['mathieu+verbes@mathieularose.com']
 MANAGERS = ADMINS
 
 SESSION_COOKIE_AGE = 180 * 24 * 60 * 60 # 180 days
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # LOGGING = {
 #     'version': 1,

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div data-role="page" id="{% block page_id %}{% endblock page_id %}">
+
+  <div data-role="header" data-position="">
+    <h1>{% block page_title %}{% endblock page_title %}</h1>
+
+    <a href="#nav-panel" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext"></a>
+    {% include "results_button.html" %}
+  </div>
+
+  <div data-role="main" class="ui-content">
+
+    {% if messages %}
+    <div class="ui-bar ui-bar-a ">
+      <ul class="jqm-messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    {% block main %}{% endblock main %}
+  </div>
+
+  <div data-role="panel" id="nav-panel">
+    <ul data-role="listview">
+      {% if not user.is_authenticated %}
+      <li><a href="{% url 'registration' %}" data-ajax="false">Inscription</a></li>
+      <li><a href="{% url 'login' %}" data-ajax="false">Connexion</a></li>
+      {% endif %}
+
+      <li><a href="{% url 'attempt' %}" data-ajax="false">Exercices</a></li>
+      <li><a href="{% url 'results' %}" data-ajax="false">Résultats</a></li>
+      <li><a href="{% url 'user-mood-tense' %}" data-ajax="false">Préférences</a></li>
+
+      {% if user.is_authenticated %}
+      <li><a href="{% url 'logout' %}" data-ajax="false">Déconnexion</a></li>
+      {% endif %}
+    </ul>
+  </div>
+
+  {% include 'footer.html' %}
+
+</div>
+
+{% endblock content %}
